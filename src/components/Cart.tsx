@@ -13,11 +13,16 @@ import {
 } from 'react-icons/hi';
 import { Button } from './ui/button';
 import { IProduct } from '@/types/globalTypes';
-
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import {
+  addToCart,
+  removeFromCart,
+  removeOne,
+} from '@/redux/features/cartSlice';
 
 export default function Cart() {
-  const total = 0
-  const products : IProduct[] = []
+  const { products, total } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
   return (
     <Sheet>
@@ -37,25 +42,26 @@ export default function Cart() {
               className="border h-44 p-5 flex justify-between rounded-md"
               key={product.name}
             >
-              <div className="border-r pr-5 shrink-0">
+              <div className="border-r pr-5 w-40 shrink-0">
                 <img src={product?.image} alt="" className="h-full" />
               </div>
               <div className="px-2 w-full flex flex-col gap-3">
-                <h1 className="text-2xl self-center">{product?.name}</h1>
+                <h1 className="text-xl self-center">{product?.name}</h1>
                 <p>Quantity: {product.quantity}</p>
-                <p className="text-xl">
+                <p className="text-md">
                   Total Price: {(product.price * product.quantity!).toFixed(2)}{' '}
                   $
                 </p>
               </div>
               <div className="border-l pl-5 flex flex-col justify-between">
-                <Button >
+                <Button onClick={() => dispatch(addToCart(product))}>
                   <HiOutlinePlus size="20" />
                 </Button>
-                <Button >
+                <Button onClick={() => dispatch(removeOne(product))}>
                   <HiMinus size="20" />
                 </Button>
                 <Button
+                  onClick={() => dispatch(removeFromCart(product))}
                   variant="destructive"
                   className="bg-red-500 hover:bg-red-400"
                 >

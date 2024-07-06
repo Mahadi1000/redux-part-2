@@ -5,15 +5,12 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { IProduct } from '@/types/globalTypes';
-
+import { useAppSelector } from '@/redux/hooks';
 import { useState } from 'react';
 
 export default function Checkout() {
-  const [scheduled, setScheduled] = useState<boolean>(false);
-  
-  const total = 0;
-  const products: IProduct[] = [];
+   const [scheduled, setScheduled] = useState<boolean>(false);
+   const { products } = useAppSelector((state) => state.cart);
   return (
     <div className="flex justify-center items-center h-[calc(100vh-80px)] gap-10 text-primary">
       <div className="max-w-3xl w-full">
