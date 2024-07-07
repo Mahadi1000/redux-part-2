@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 export default function ProductDetails() {
   const { id } = useParams();
 
-  //! Temporary code, should be replaced with redux
   const [data, setData] = useState<IProduct[]>([]);
   useEffect(() => {
     fetch('../../public/data.json')
@@ -16,8 +15,6 @@ export default function ProductDetails() {
   }, []);
 
   const product = data?.find((item) => item._id === Number(id));
-
-  //! Temporary code ends here
 
   return (
     <>
@@ -36,7 +33,7 @@ export default function ProductDetails() {
           <Button>Add to cart</Button>
         </div>
       </div>
-      <ProductReview />
+      <ProductReview productId={product?._id} />
     </>
   );
 }
